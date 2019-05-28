@@ -17,10 +17,6 @@ import java.awt.image.BufferedImage.TYPE_INT_RGB
 import java.io.*
 import javax.imageio.ImageIO
 
-actual object Platform {
-    actual val name: String = "JVM"
-}
-
 fun main() {
     embeddedServer(Netty, port = 8080, host = "127.0.0.1") {
         val currentDir = File(".").absoluteFile
@@ -40,14 +36,14 @@ fun main() {
             get("/") {
                 call.respondHtml {
                     head {
-                        title("Hello from Ktor!")
+                        title("Multiplatform Game of Life")
                     }
                     body {
                         h3 {
                             +"Multiplatform Game of Life"
                         }
                         p {
-                            +"${hello()} from Ktor."
+                            +"Left: JS/Canvas | Right: JVM/BufferedImage (PNG)"
                         }
 
                         script(src = "/static/require.min.js") {
@@ -93,22 +89,19 @@ fun main() {
                 }
                 val b = BufferedImage(100, 100, TYPE_INT_RGB)
                 val graphics = b.createGraphics()
-                for(x in 0 until world.width) {
-                    for(y in 0 until world.height) {
-                        if(world.get(x,y) == CellState.ALIVE) {
-                            graphics.color = Color.RED
-                            graphics.fill3DRect(x * 10, y * 10, 10, 10, true)
-                        }
-                    }
+                graphics.color = Color.RED
+
+                world.forEachAlive { x, y ->
+                    graphics.fill3DRect(x * 10, y * 10, 10, 10, true)
                 }
 
-                val bytes = ByteArrayOutputStream()
-                ImageIO.write(b, "png", bytes)
-                Thread.sleep(200)
-                call.respondBytes(contentType = ContentType.Image.PNG) {
-                    bytes.toByteArray()
+                val x = ByteArrayOutputStream().use {
+                    ImageIO.write(b, "png", it)
+                    it.toByteArray()
                 }
-                bytes.close()
+
+                Thread.sleep(200)
+                call.respondBytes(contentType = ContentType.Image.PNG, bytes = x)
             }
 
             static("/static") {
@@ -116,8 +109,4 @@ fun main() {
             }
         }
     }.start(wait = true)
-}
-
-actual fun render(w: World) {
-
 }

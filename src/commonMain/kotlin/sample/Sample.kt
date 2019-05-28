@@ -1,20 +1,12 @@
 package sample
 
-expect object Platform {
-    val name: String
-}
-
-expect fun render(w: World)
-
-fun hello(): String = "Hello from ${Platform.name}"
-
 enum class CellState {
     DEAD,
     ALIVE
 }
 
-val emptyWorld = World(Array(10) { y ->
-    Array(10) { x ->
+val emptyWorld = World(Array(10) {
+    Array(10) {
         CellState.DEAD
     }
 })
@@ -35,6 +27,14 @@ class World(private val matrix: Array<Array<CellState>>) {
         matrix.forEachIndexed { y, line ->
             line.forEachIndexed { x, cellState ->
                 f(x, y, cellState)
+            }
+        }
+    }
+
+    fun forEachAlive(f: (x: Int, y: Int) -> Unit) {
+        forEach { x, y, cellState ->
+            if (cellState == CellState.ALIVE) {
+                f(x, y)
             }
         }
     }
@@ -66,28 +66,21 @@ class World(private val matrix: Array<Array<CellState>>) {
 
     fun map(ruleset: (x: Int, y: Int, state: CellState) -> CellState): World {
         var newWorld = emptyWorld
-        for (x in 0 until width) {
-            for (y in 0 until height) {
-                val currentState = get(x, y)
-                val newState = ruleset(x, y, currentState)
-                newWorld = newWorld.set(x, y, newState)
-            }
-        }
+        forEach { x, y, cellState -> newWorld = newWorld.set(x, y, ruleset(x, y, cellState)) }
         return newWorld
     }
+
 }
 
-fun World.conway(): World {
-    return map { x, y, state ->
-        when (state) {
-            CellState.ALIVE -> when (countNeighbors(x, y)) {
-                in 2..3 -> CellState.ALIVE // living on
-                else -> CellState.DEAD // underpopulation or overpopulation
-            }
-            CellState.DEAD -> when (countNeighbors(x, y)) {
-                3 -> CellState.ALIVE // reproduction
-                else -> CellState.DEAD
-            }
+fun World.conway() = map { x, y, state ->
+    when (state) {
+        CellState.ALIVE -> when (countNeighbors(x, y)) {
+            in 2..3 -> CellState.ALIVE // living on
+            else -> CellState.DEAD // underpopulation or overpopulation
+        }
+        CellState.DEAD -> when (countNeighbors(x, y)) {
+            3 -> CellState.ALIVE // reproduction
+            else -> CellState.DEAD
         }
     }
 }
@@ -96,30 +89,19 @@ fun World.toAscii(): String {
     val sb = StringBuilder()
     for (y in 0 until height) {
         for (x in 0 until width) {
-            sb.append(when (get(x, y)) {
-                CellState.DEAD -> "❌"
-                CellState.ALIVE -> "✅"
-            })
+            sb.append(
+                when (get(x, y)) {
+                    CellState.DEAD -> "❌"
+                    CellState.ALIVE -> "✅"
+                }
+            )
         }
         sb.append("\n")
     }
     return sb.toString()
 }
 
-fun World.cliPrint() {
-    for (y in 0 until height) {
-        for (x in 0 until width) {
-            when (get(x, y)) {
-                CellState.DEAD -> "_"
-                CellState.ALIVE -> "#"
-            }.run(::print)
-        }
-        println()
-    }
-}
-
 fun main() {
-    var world = populatedWorld
-        world.cliPrint()
-        world = world.conway()
+    val world = populatedWorld
+    println(world.toAscii())
 }

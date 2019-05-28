@@ -6,24 +6,14 @@ import org.w3c.dom.HTMLCanvasElement
 import org.w3c.dom.HTMLImageElement
 import kotlin.browser.*
 
-actual object Platform {
-    actual val name: String = "JS"
-}
-
-actual fun render(w: World) {
+fun render(w: World) {
     val canvas = document.getElementById("conway-canvas") as HTMLCanvasElement
     val ctx = canvas.getContext("2d") as CanvasRenderingContext2D
     ctx.clearRect(0.0, 0.0, canvas.width.toDouble(), canvas.height.toDouble())
-    for(x in 0 until w.width) {
-        for(y in 0 until w.height) {
-            if(w.get(x,y) == CellState.ALIVE) {
-                ctx.beginPath()
-                ctx.rect(x * 10.0, y * 10.0, 10.0, 10.0)
-                ctx.fill()
-                ctx.closePath()
-            }
-        }
-    }
+    ctx.beginPath()
+    w.forEachAlive { x, y -> ctx.rect(x * 10.0, y * 10.0, 10.0, 10.0) }
+    ctx.fill()
+    ctx.closePath()
 }
 
 var world = populatedWorld
