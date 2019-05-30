@@ -97,5 +97,7 @@ kotlin {
             )
         }
         systemProperty("jsWeb", webFolder)
+        ///disable app icon on macOS
+        systemProperty("java.awt.headless", "true")
     }
 }
