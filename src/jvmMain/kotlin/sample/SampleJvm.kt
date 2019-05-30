@@ -1,6 +1,7 @@
 package sample
 
 import io.ktor.application.*
+import io.ktor.features.CallLogging
 import io.ktor.html.*
 import io.ktor.http.ContentType
 import io.ktor.http.content.*
@@ -9,12 +10,13 @@ import io.ktor.response.respondText
 import io.ktor.routing.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
+import kotlinx.coroutines.time.delay
 import kotlinx.html.*
 import java.awt.Color
 import java.awt.image.BufferedImage
-import java.awt.image.BufferedImage.TYPE_INT_BGR
 import java.awt.image.BufferedImage.TYPE_INT_RGB
 import java.io.*
+import java.time.Duration
 import javax.imageio.ImageIO
 
 fun main() {
@@ -22,15 +24,11 @@ fun main() {
         val currentDir = File(".").absoluteFile
         environment.log.info("Current directory: $currentDir")
 
-        val webDir = listOf(
-            "web",
-            "../src/jsMain/web",
-            "src/jsMain/web"
-        ).map {
-            File(currentDir, it)
-        }.firstOrNull { it.isDirectory }?.absoluteFile ?: error("Can't find 'web' folder for this sample")
+        val webDir = File(System.getProperty("jsWeb") ?: "cannot find path to jsWeb in the system property. Running via the Gradle run task?")
 
         environment.log.info("Web directory: $webDir")
+
+        install(CallLogging)
 
         routing {
             get("/") {
@@ -95,13 +93,13 @@ fun main() {
                     graphics.fill3DRect(x * 10, y * 10, 10, 10, true)
                 }
 
-                val x = ByteArrayOutputStream().use {
+                val imageBytes = ByteArrayOutputStream().use {
                     ImageIO.write(b, "png", it)
                     it.toByteArray()
                 }
 
-                Thread.sleep(200)
-                call.respondBytes(contentType = ContentType.Image.PNG, bytes = x)
+                delay(Duration.ofMillis(200))
+                call.respondBytes(contentType = ContentType.Image.PNG, bytes = imageBytes)
             }
 
             static("/static") {
