@@ -1,0 +1,7 @@
+Build
+Index
+**/*.xcworkspace
+**/*.xcworkspacedata
+**/*.xcuserstate
+**/xcuserdata
+**/xcuserstate

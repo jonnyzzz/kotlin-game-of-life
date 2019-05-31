@@ -35,7 +35,8 @@ kotlin {
   }
 
   xcode {
-    setupFramework("GameOfLive") {
+    setupFramework("ios") {
+      baseName = "GameOfLifeFramework"
       embedBitcode = Framework.BitcodeEmbeddingMode.BITCODE
     }
   }
