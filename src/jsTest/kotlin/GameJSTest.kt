@@ -1,9 +1,9 @@
-package sample
+package org.jonnyzzz.lifegame
 
 import kotlin.test.Test
 import kotlin.test.assertTrue
 
-class SampleTestsJS {
+class GameJSTest {
     @Test
     fun testHello() {
 
