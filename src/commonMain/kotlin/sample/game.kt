@@ -18,10 +18,7 @@ fun main() {
     println(m.asString())
 
     m = m.iterate(Maze3::evolution)
-
   }
-
-
 }
 
 fun Maze3.countNeighbors(x: Int, y: Int): Int {
