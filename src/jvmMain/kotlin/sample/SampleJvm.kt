@@ -108,3 +108,6 @@ fun main() {
         }
     }.start(wait = true)
 }
+
+
+// https://memorynotfound.com/generate-gif-image-java-delay-infinite-loop-example/
