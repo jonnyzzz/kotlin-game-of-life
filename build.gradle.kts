@@ -101,3 +101,13 @@ kotlin {
         systemProperty("java.awt.headless", "true")
     }
 }
+
+
+kotlin.targets.all {
+  compilations.all {
+    kotlinOptions.freeCompilerArgs += listOf(
+      "-XXLanguage:+InlineClasses",
+      "-Xuse-experimental=kotlin.contracts.ExperimentalContracts"
+    )
+  }
+}
