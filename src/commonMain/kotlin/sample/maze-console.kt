@@ -1,17 +1,17 @@
 package org.jonnyzzz.game
 
 
-private val emptyCell = "🕸"
+private val emptyCell = listOf("🕸")
 private val aliveCells = listOf("🐜", "🐛", "🦗", "🐞", "🦠")
 
-fun Maze3.asString() = buildString {
+fun Maze3.renderToString() = buildString {
   for (y in 0 until height) {
     for (x in 0 until width) {
       append(
         when (get(x, y)) {
-          CellState.ALIVE -> aliveCells.random()
-          else -> emptyCell
-        }
+          CellState.ALIVE -> aliveCells
+          CellState.DEAD -> emptyCell
+        }.random()
       )
     }
     append("\n")
