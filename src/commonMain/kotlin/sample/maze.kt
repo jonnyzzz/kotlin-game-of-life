@@ -1,4 +1,4 @@
-package org.jonnyzzz.game
+package org.jonnyzzz.lifegame
 
 enum class CellState {
   DEAD,

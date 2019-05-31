@@ -1,4 +1,4 @@
-package org.jonnyzzz.game
+package org.jonnyzzz.lifegame
 
 
 class Maze3(val width: Int, val height: Int) : MazeWorld {

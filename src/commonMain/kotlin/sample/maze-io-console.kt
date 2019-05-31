@@ -1,4 +1,4 @@
-package org.jonnyzzz.game
+package org.jonnyzzz.lifegame
 
 
 private val emptyCell = listOf("🕸")
