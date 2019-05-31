@@ -2,17 +2,18 @@ package org.jonnyzzz.lifegame
 
 import kotlin.properties.Delegates
 
+private fun initIOS() = randomMaze(18, 40)
 
 class WorldWrapper(
   val onWorldChange: (String) -> Unit
 ) {
 
-  private var world by Delegates.observable(randomMaze(200, 200)) { _, _, new ->
+  private var world by Delegates.observable(initIOS()) { _, _, new ->
     onWorldChange(new.renderToString())
   }
 
   fun initWorld() {
-    world = randomMaze(200, 200)
+    world = initIOS()
   }
 
   fun iterateWorld() {
