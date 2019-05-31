@@ -47,7 +47,6 @@ fun nextStep() = MainScope.launch {
 var autoPlay : Job? = null
 
 fun toggleAutoplay() = MainScope.launch {
-
   if (autoPlay != null)  {
     autoPlay?.cancel()
     autoPlay = null
@@ -68,9 +67,6 @@ fun renderHTML() = MainScope.launch {
     h3 {
       +"Multiplatform Game of Life"
     }
-    p {
-      +"Left: JS/Canvas | Right: JVM/BufferedImage (PNG)"
-    }
 
     val size = "400px"
     div(classes = "images") {
@@ -86,19 +82,22 @@ fun renderHTML() = MainScope.launch {
       }
     }
 
-    div {
+    div(classes = "controls btn-block"){
       button {
-        +"Random"
+        +"Init Random"
+        classes = setOf("btn", "btn-primary")
         onClickFunction = { world = randomMaze(40, 40) }
       }
 
       button {
-        +"Step simulation"
+        +"Next Generation"
+        classes = setOf("btn", "btn-primary")
         onClickFunction = { nextStep() }
       }
 
       button {
-        +"Toggle Auto play"
+        +"Toggle Autoplay"
+        classes = setOf("btn", "btn-primary")
         onClickFunction = { toggleAutoplay() }
       }
     }
@@ -111,40 +110,5 @@ fun renderHTML() = MainScope.launch {
 
   }
 
-  world = world.nextGeneration(EvolutionCell::conwayLaws)
+  nextStep()
 }
-
-
-//
-//fun render(w: World) {
-//
-//}
-//
-//var world = populatedWorld
-//var simStep = 0
-//var image: HTMLImageElement? = null
-//
-//@JsName("setupUI")
-//fun setupUI() {
-//    val step = document.getElementById("step-simulation") as HTMLButtonElement
-//    step.onclick = {
-//        simulationStep()
-//    }
-//
-//    image = document.getElementById("conway-image") as HTMLImageElement
-//
-//    render(world)
-//    setImage(0)
-//}
-//
-//@JsName("simulationStep")
-//fun simulationStep() {
-//    simStep++
-//    world = world.conway()
-//    render(world)
-//    setImage(simStep)
-//}
-//
-//fun setImage(simStep: Int) {
-//    image?.src = "/postcard/$simStep"
-//}

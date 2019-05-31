@@ -3,7 +3,13 @@
 <head>
   <title>Game of Life</title>
 
+  <link rel="stylesheet" href="/static/bootstrap-reboot.min.css">
+  <link rel="stylesheet" href="/static/bootstrap.min.css">
   <style>
+    body {
+      padding: 2em;
+    }
+
     div.images canvas,
     div.images img
     {
@@ -13,12 +19,18 @@
 
     div.preImages {
     }
+
+    div.controls,
+    div.controls button {
+      margin: 10px;
+    }
   </style>
+
 
 </head>
 <body>
 
-<div id="content"></div>
+<div id="content" class="container"></div>
 
 <script src="/static/require.min.js"></script>
 <script type="text/javascript">
