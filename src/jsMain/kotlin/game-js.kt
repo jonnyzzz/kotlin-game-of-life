@@ -33,7 +33,9 @@ var world by Delegates.observable(glider.toSize(40, 40)) { _, _, new ->
 
     ctx.clearRect(0.0, 0.0, leftImage.width.toDouble(), leftImage.height.toDouble())
     ctx.beginPath()
-    new.forEachAlive { x, y -> ctx.rect(x * stepX, y * stepY, stepX, stepY) }
+    new.forEachAlive { x, y ->
+      ctx.rect(x * stepX, y * stepY, stepX, stepY)
+    }
     ctx.fill()
     ctx.closePath()
   }
