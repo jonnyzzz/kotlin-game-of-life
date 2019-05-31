@@ -7,8 +7,9 @@ repositories {
     maven(url = "https://dl.bintray.com/kotlin/ktor")
     mavenCentral()
 }
-val ktor_version = "1.1.3"
-val logback_version = "1.2.3"
+
+val ktorVersion = "1.1.3"
+val logbackVersion = "1.2.3"
 
 kotlin {
     jvm()
@@ -40,9 +41,9 @@ kotlin {
 
     jvmMain.dependencies {
         implementation(kotlin("stdlib-jdk8"))
-        implementation("io.ktor:ktor-server-netty:$ktor_version")
-        implementation("io.ktor:ktor-html-builder:$ktor_version")
-        implementation("ch.qos.logback:logback-classic:$logback_version")
+        implementation("io.ktor:ktor-server-netty:$ktorVersion")
+        implementation("io.ktor:ktor-html-builder:$ktorVersion")
+        implementation("ch.qos.logback:logback-classic:$logbackVersion")
     }
 
     jvmTest.dependencies {
