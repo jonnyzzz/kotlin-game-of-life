@@ -9,6 +9,7 @@ inline class CellId(val c: Long)  {
   val x: X get() = X(c.shr(32).toInt())
   val y: Y get() = Y(c.and(Int.MAX_VALUE.toLong()).toInt())
 }
+
 fun CellId(x: X, y: Y) = CellId(x.x.toLong().shl(32) + y.y)
 
 class Space(width: Int, height: Int) {
