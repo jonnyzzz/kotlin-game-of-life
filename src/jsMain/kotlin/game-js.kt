@@ -105,7 +105,6 @@ fun renderHTML() = MainScope.launch {
         id = ::preImage.name
       }
     }
-
   }
 
   yield()
