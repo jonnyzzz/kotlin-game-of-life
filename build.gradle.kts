@@ -1,5 +1,8 @@
+import org.jetbrains.kotlin.gradle.plugin.mpp.Framework
+
 plugins {
   kotlin("multiplatform") version "1.3.31"
+  kotlin("xcode-compat") version "0.1"
 }
 
 repositories {
@@ -20,6 +23,20 @@ kotlin {
         sourceMap = true
         metaInfo = true
       }
+    }
+  }
+
+  macosX64("console") {
+    binaries {
+      executable {
+        entryPoint = "org.jonnyzzz.lifegame.main"
+      }
+    }
+  }
+
+  xcode {
+    setupFramework("GameOfLive") {
+      embedBitcode = Framework.BitcodeEmbeddingMode.BITCODE
     }
   }
 
