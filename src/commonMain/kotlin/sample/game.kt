@@ -16,8 +16,7 @@ fun main() {
 
   repeat(10) {
     println(m.asString())
-
-    m = m.iterate(Maze3::evolution)
+    m = m.buildNextMaze(Maze3::evolution)
   }
 }
 

@@ -10,7 +10,7 @@ class Maze3(val width: Int, val height: Int) {
   }
 }
 
-fun Maze3.iterate(rules: Maze3.(Int, Int) -> CellState) : Maze3 {
+fun Maze3.buildNextMaze(rules: Maze3.(Int, Int) -> CellState) : Maze3 {
   val copy = Maze3(width, height)
   for (y in 0 until height) {
     for (x in 0 until width) {
