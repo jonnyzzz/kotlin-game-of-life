@@ -1,15 +1,13 @@
 package org.jonnyzzz.lifegame
 
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.yield
 import kotlinx.html.*
 import kotlinx.html.dom.append
 import kotlinx.html.js.onClickFunction
-import org.w3c.dom.CanvasRenderingContext2D
-import org.w3c.dom.Document
-import org.w3c.dom.HTMLCanvasElement
-import org.w3c.dom.HTMLImageElement
+import org.w3c.dom.*
 import kotlin.browser.document
 import kotlin.properties.Delegates
 import kotlin.reflect.KProperty
@@ -19,10 +17,15 @@ val MainScope = MainScope()
 
 val leftImage : HTMLCanvasElement by document
 val rightImage : HTMLImageElement by document
+val preImage : HTMLPreElement by document
 
 inline operator fun <reified T> Document.getValue(x: Any?, kProperty: KProperty<*>) = getElementById(kProperty.name) as T
 
-var world by Delegates.observable(glider.toSize(100, 100)) { _, _, new ->
+var world by Delegates.observable(glider.toSize(40, 40)) { _, _, new ->
+  MainScope.launch {
+    preImage.innerText = new.toSize(40, 25).renderToString()
+  }
+
   MainScope.launch {
     val ctx = leftImage.getContext("2d") as CanvasRenderingContext2D
     val stepX = leftImage.width.toDouble() / new.width
@@ -36,8 +39,26 @@ var world by Delegates.observable(glider.toSize(100, 100)) { _, _, new ->
   }
 }
 
-fun updateLeftImage() = MainScope.launch {
+
+fun nextStep() = MainScope.launch {
   world = world.nextGeneration(EvolutionCell::conwayLaws)
+}
+
+var autoPlay : Job? = null
+
+fun toggleAutoplay() = MainScope.launch {
+
+  if (autoPlay != null)  {
+    autoPlay?.cancel()
+    autoPlay = null
+  } else {
+    autoPlay = launch {
+      while (true) {
+        nextStep().join()
+        delay(222)
+      }
+    }
+  }
 }
 
 @Suppress("unused")
@@ -65,13 +86,32 @@ fun renderHTML() = MainScope.launch {
       }
     }
 
-    button {
-      +"Step simulation"
-      onClickFunction = { updateLeftImage() }
+    div {
+      button {
+        +"Random"
+        onClickFunction = { world = randomMaze(40, 40) }
+      }
+
+      button {
+        +"Step simulation"
+        onClickFunction = { nextStep() }
+      }
+
+      button {
+        +"Toggle Auto play"
+        onClickFunction = { toggleAutoplay() }
+      }
     }
+
+    div(classes = "preImages") {
+      pre {
+        id = ::preImage.name
+      }
+    }
+
   }
 
-  updateLeftImage()
+  world = world.nextGeneration(EvolutionCell::conwayLaws)
 }
 
 

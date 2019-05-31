@@ -1,5 +1,6 @@
 package org.jonnyzzz.lifegame
 
+val empty get() = Maze3(1,1)
 
 val blinker get() = loadMaze("""
       ...........
@@ -31,6 +32,7 @@ val glider get() = loadMaze("""
       .................
 
   """)
+
 
 fun main() {
   var m = glider
