@@ -47,6 +47,7 @@ kotlin {
   val jvmTest by sourceSets.getting
   val jsMain by sourceSets.getting
   val jsTest by sourceSets.getting
+  val iosMain by sourceSets.getting
 
   commonMain.dependencies {
     implementation(kotlin("stdlib-common"))
@@ -79,6 +80,9 @@ kotlin {
     implementation(kotlin("test-js"))
   }
 
+  iosMain.dependencies {
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-native:1.2.1")
+  }
 
   val webFolder = File(project.buildDir, "jsMain/web")
   val jsCompilations = kotlin.targets.getByName("js").compilations

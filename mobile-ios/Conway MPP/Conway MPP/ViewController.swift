@@ -11,21 +11,27 @@ import GameOfLifeFramework
 
 class ViewController: UIViewController {
 
-    @IBOutlet weak var myImage: UIImageView!
-    
-    var world = Maze_randomKt.randomMaze(width: 100, height: 100, p: 0.5)
+    @IBOutlet weak var text: UITextView!
+    var world : WorldWrapper!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        world = WorldWrapper { [text] render -> KotlinUnit in
+                text!.text = render
+                return KotlinUnit()
+        }
         GameKt.main()
+        
+        world?.doInitWorld()
     }
 
-
+    @IBAction func onLongClick(_ sender: Any) {
+          world?.doInitWorld()
+    }
+    
     @IBAction func onClick(_ sender: Any) {
-        world = world.nextGeneration(evolutionRule: { (<#EvolutionCell#>) -> CellState in
-            <#code#>
-        })
+         world?.iterateWorld()
     }
 }
 

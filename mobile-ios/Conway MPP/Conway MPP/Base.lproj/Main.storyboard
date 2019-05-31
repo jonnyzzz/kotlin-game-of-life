@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Game Of Live MPP" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mAm-Oj-78U">
-                                <rect key="frame" x="20" y="51" width="374" height="144"/>
+                                <rect key="frame" x="20" y="51" width="374" height="126"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                 <accessibility key="accessibilityConfiguration">
                                     <accessibilityTraits key="traits" staticText="YES" header="YES"/>
@@ -28,23 +28,27 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PZW-pz-Vd8">
-                                <rect key="frame" x="20" y="203" width="374" height="591"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="Loading..." textAlignment="natural" adjustsFontForContentSizeCategory="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tyl-Wi-Wye">
+                                <rect key="frame" x="20" y="172" width="374" height="690"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <accessibility key="accessibilityConfiguration">
                                     <accessibilityTraits key="traits" button="YES" image="YES"/>
                                 </accessibility>
                                 <gestureRecognizers/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
                                 <connections>
-                                    <outletCollection property="gestureRecognizers" destination="4F0-t1-rTF" appends="YES" id="5kT-SD-4dE"/>
+                                    <outletCollection property="gestureRecognizers" destination="4F0-t1-rTF" appends="YES" id="oLo-2W-dHj"/>
+                                    <outletCollection property="gestureRecognizers" destination="BD4-me-Q3p" appends="YES" id="W0J-gh-HAm"/>
                                 </connections>
-                            </imageView>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
-                        <outlet property="myImage" destination="PZW-pz-Vd8" id="jbM-4g-orC"/>
+                        <outlet property="text" destination="Tyl-Wi-Wye" id="uCS-AP-2Wc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -53,6 +57,16 @@
                         <action selector="onClick:" destination="BYZ-38-t0r" id="jxy-Ut-GfW"/>
                     </connections>
                 </tapGestureRecognizer>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="g9D-jZ-Qva">
+                    <connections>
+                        <action selector="onLongClick:" destination="BYZ-38-t0r" id="kpx-40-4o6"/>
+                    </connections>
+                </pongPressGestureRecognizer>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="BD4-me-Q3p">
+                    <connections>
+                        <action selector="onLongClick:" destination="BYZ-38-t0r" id="XeV-SS-NMx"/>
+                    </connections>
+                </pongPressGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="137.68115942028987" y="137.94642857142856"/>
         </scene>
