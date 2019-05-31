@@ -1,14 +1,14 @@
 package org.jonnyzzz.lifegame
 
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import kotlinx.html.*
 import kotlinx.html.dom.append
 import kotlinx.html.js.onClickFunction
 import org.w3c.dom.*
 import kotlin.browser.document
+import kotlin.dom.addClass
+import kotlin.dom.hasClass
+import kotlin.dom.removeClass
 import kotlin.properties.Delegates
 import kotlin.reflect.KProperty
 
@@ -16,7 +16,6 @@ import kotlin.reflect.KProperty
 val MainScope = MainScope()
 
 val leftImage : HTMLCanvasElement by document
-val rightImage : HTMLImageElement by document
 val preImage : HTMLPreElement by document
 
 inline operator fun <reified T> Document.getValue(x: Any?, kProperty: KProperty<*>) = getElementById(kProperty.name) as T
@@ -66,19 +65,10 @@ fun toggleAutoplay() = MainScope.launch {
 @JsName("initTheGame")
 fun renderHTML() = MainScope.launch {
   document.getElementById("content")!!.append {
-    h3 {
-      +"Multiplatform Game of Life"
-    }
-
     val size = "400px"
     div(classes = "images") {
       canvas {
         id = ::leftImage.name
-        width = size
-        height = size
-      }
-      canvas {
-        id = ::rightImage.name
         width = size
         height = size
       }
@@ -102,6 +92,12 @@ fun renderHTML() = MainScope.launch {
         classes = setOf("btn", "btn-primary")
         onClickFunction = { toggleAutoplay() }
       }
+
+      button {
+        +"Toggle Console Mode"
+        classes = setOf("btn", "btn-primary")
+        onClickFunction = { preImage.toggleClass("shown") }
+      }
     }
 
     div(classes = "preImages") {
@@ -112,5 +108,14 @@ fun renderHTML() = MainScope.launch {
 
   }
 
+  yield()
   nextStep()
+}
+
+fun Element.toggleClass(name: String) {
+  if (hasClass(name)) {
+    removeClass(name)
+  } else {
+    addClass(name)
+  }
 }
