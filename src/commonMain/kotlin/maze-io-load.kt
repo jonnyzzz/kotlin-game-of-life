@@ -1,6 +1,8 @@
 package org.jonnyzzz.lifegame
 
 
+fun String.toMaze() = loadMaze(this)
+
 fun loadMaze(s: String): Maze3 {
   val rows = s.split("\n").map { it.trim() }.filter { it.isNotBlank() }
 
