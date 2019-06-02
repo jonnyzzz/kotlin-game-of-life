@@ -10,19 +10,21 @@ fun main() {
 
   println("Rendering to $file")
 
-  FileOutputStream(file).use { fileOutput ->
-    MemoryCacheImageOutputStream(fileOutput).use { os ->
-      gifSequenceWriter(os, delay = 200, loop = false, images = sequence {
-        var world = randomMaze(40, 40)
-        var prevImage = world.toImage(800, 800)
+  val images = sequence {
+    var world = randomMaze(40, 40)
+    var prevImage = world.toImage(800, 800)
 
-        repeat(300) {
-          println("Step $it...")
-          world = world.nextGeneration(EvolutionCell::conwayLaws)
-          prevImage = world.renderToImage(prevImage.addAging())
-          yield(prevImage)
-        }
-      })
+    repeat(300) {
+      println("Step $it...")
+      world = world.nextGeneration(EvolutionCell::conwayLaws)
+      prevImage = world.renderToImage(prevImage.addAging())
+      yield(prevImage)
+    }
+  }
+
+  FileOutputStream(file).use {
+    MemoryCacheImageOutputStream(it).use { os ->
+      gifSequenceWriter(os, delay = 200, loop = false, images = images)
     }
   }
 

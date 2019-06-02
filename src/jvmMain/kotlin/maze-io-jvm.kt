@@ -16,16 +16,20 @@ fun Maze3.toImage(width: Int, height: Int): BufferedImage {
   return img
 }
 
-fun Maze3.renderToImage(image: BufferedImage, color: Color = Color.BLACK): BufferedImage {
-  val stepX = image.width / this.width
-  val stepY = image.height / this.height
+fun Maze3.renderToImage(image: BufferedImage): BufferedImage {
+  renderImage(this, image)
+  return image
+}
+
+private fun renderImage(maze: Maze3, image: BufferedImage) {
+  val stepX = image.width / maze.width
+  val stepY = image.height / maze.height
 
   val ctx = image.graphics
-  ctx.color = color
-  forEachAlive { x, y ->
+  ctx.color = Color.BLACK
+  maze.forEachAlive { x, y ->
     ctx.fillRoundRect(x * stepX, y * stepY, stepX - 1, stepY - 1, stepX, stepY)
   }
-  return image
 }
 
 fun BufferedImage.addAging() = apply {

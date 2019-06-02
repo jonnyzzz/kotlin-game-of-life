@@ -12,7 +12,6 @@ import GameOfLifeFramework
 class ViewController: UIViewController {
 
     @IBOutlet weak var text: UILabel!
-    
     var world : WorldWrapper!
     
     override func viewDidLoad() {
@@ -24,7 +23,7 @@ class ViewController: UIViewController {
             var newText = ""
             
             for line in render.split(separator: "\n") {
-                newText += line.prefix(12) + "\n "
+                newText += line.prefix(12) + " \n"
                 lineCount += 1
             }
             
@@ -33,8 +32,6 @@ class ViewController: UIViewController {
             
             return KotlinUnit()
         }
-        GameKt.main()
-        
         world?.doInitWorld()
     }
 

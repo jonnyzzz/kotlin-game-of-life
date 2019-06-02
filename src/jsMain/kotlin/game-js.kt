@@ -4,7 +4,10 @@ import kotlinx.coroutines.*
 import kotlinx.html.*
 import kotlinx.html.dom.append
 import kotlinx.html.js.onClickFunction
-import org.w3c.dom.*
+import org.w3c.dom.Document
+import org.w3c.dom.Element
+import org.w3c.dom.HTMLCanvasElement
+import org.w3c.dom.HTMLPreElement
 import kotlin.browser.document
 import kotlin.dom.addClass
 import kotlin.dom.hasClass
@@ -15,10 +18,11 @@ import kotlin.reflect.KProperty
 
 val MainScope = MainScope()
 
-val leftImage : HTMLCanvasElement by document
-val preImage : HTMLPreElement by document
+val leftImage: HTMLCanvasElement by document
+val preImage: HTMLPreElement by document
 
-inline operator fun <reified T> Document.getValue(x: Any?, kProperty: KProperty<*>) = getElementById(kProperty.name) as T
+inline operator fun <reified T> Document.getValue(x: Any?, kProperty: KProperty<*>) =
+  getElementById(kProperty.name) as T
 
 var world by Delegates.observable(glider.toSize(40, 40)) { _, _, new ->
   MainScope.launch {
@@ -35,10 +39,10 @@ fun nextStep() = MainScope.launch {
   world = world.nextGeneration(EvolutionCell::conwayLaws)
 }
 
-var autoPlay : Job? = null
+var autoPlay: Job? = null
 
 fun toggleAutoplay() = MainScope.launch {
-  if (autoPlay != null)  {
+  if (autoPlay != null) {
     autoPlay?.cancel()
     autoPlay = null
   } else {
@@ -55,7 +59,8 @@ fun toggleAutoplay() = MainScope.launch {
 @JsName("initTheGame")
 fun renderHTML() = MainScope.launch {
   document.getElementById("content")!!.append {
-    div(classes = "controls btn-block"){
+
+    div(classes = "controls btn-block") {
       button {
         +"Init Random"
         classes = setOf("btn", "btn-primary")
@@ -85,7 +90,7 @@ fun renderHTML() = MainScope.launch {
     }
 
     div(classes = "preImages") {
-      pre(classes = "hidden"){
+      pre(classes = "hidden") {
         id = ::preImage.name
       }
     }

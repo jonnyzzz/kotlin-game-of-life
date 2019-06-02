@@ -18,8 +18,6 @@ import io.ktor.server.netty.Netty
 import java.io.ByteArrayOutputStream
 import java.io.File
 import javax.imageio.ImageIO
-import javax.imageio.stream.ImageOutputStream
-import javax.imageio.stream.MemoryCacheImageInputStream
 import javax.imageio.stream.MemoryCacheImageOutputStream
 
 fun main() {
