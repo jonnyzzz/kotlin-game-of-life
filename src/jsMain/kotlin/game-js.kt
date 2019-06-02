@@ -88,12 +88,15 @@ fun renderHTML() = MainScope.launch {
       button {
         +"Toggle Console Mode"
         classes = setOf("btn", "btn-primary")
-        onClickFunction = { preImage.toggleClass("shown") }
+        onClickFunction = {
+          preImage.toggleClass("hidden")
+          leftImage.toggleClass("hidden")
+        }
       }
     }
 
     div(classes = "preImages") {
-      pre {
+      pre(classes = "hidden"){
         id = ::preImage.name
       }
     }
