@@ -26,7 +26,7 @@ var world by Delegates.observable(glider.toSize(40, 40)) { _, _, new ->
   }
 
   MainScope.launch {
-    new.render(leftImage.getContext("2d") as CanvasRenderingContext2D)
+    new.render(leftImage)
   }
 }
 
@@ -55,7 +55,6 @@ fun toggleAutoplay() = MainScope.launch {
 @JsName("initTheGame")
 fun renderHTML() = MainScope.launch {
   document.getElementById("content")!!.append {
-    val size = "400px"
     div(classes = "controls btn-block"){
       button {
         +"Init Random"
@@ -94,8 +93,8 @@ fun renderHTML() = MainScope.launch {
     div(classes = "images") {
       canvas {
         id = ::leftImage.name
-        width = size
-        height = size
+        width = "610px"
+        height = "610px"
       }
     }
 
