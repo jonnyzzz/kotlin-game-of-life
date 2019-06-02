@@ -66,14 +66,6 @@ fun toggleAutoplay() = MainScope.launch {
 fun renderHTML() = MainScope.launch {
   document.getElementById("content")!!.append {
     val size = "400px"
-    div(classes = "images") {
-      canvas {
-        id = ::leftImage.name
-        width = size
-        height = size
-      }
-    }
-
     div(classes = "controls btn-block"){
       button {
         +"Init Random"
@@ -105,6 +97,15 @@ fun renderHTML() = MainScope.launch {
         id = ::preImage.name
       }
     }
+
+    div(classes = "images") {
+      canvas {
+        id = ::leftImage.name
+        width = size
+        height = size
+      }
+    }
+
   }
 
   yield()
