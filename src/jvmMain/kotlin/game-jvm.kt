@@ -46,9 +46,9 @@ fun main() {
       }
 
       fun buildWorld(call: ApplicationCall): Maze3 {
-        val simStep = call.parameters["simStep"]?.toInt() ?: 0
-        val width = call.parameters["width"]?.toInt() ?: 40
-        val height = call.parameters["height"]?.toInt() ?: 40
+        val simStep = call.request.queryParameters["iterations"]?.toIntOrNull() ?: 0
+        val width =   call.request.queryParameters["width"]?.toIntOrNull() ?: 40
+        val height =  call.request.queryParameters["height"]?.toIntOrNull() ?: 40
         var world = randomMaze(width, height)
         repeat(simStep) {
           world = world.nextGeneration(EvolutionCell::conwayLaws)
@@ -77,7 +77,7 @@ fun main() {
 
       get("/gif") {
         call.respondOutputStream(contentType = ContentType.Image.GIF) {
-          val steps = call.parameters["steps"]?.toInt() ?: 3
+          val steps = call.request.queryParameters["steps"]?.toInt() ?: 3
 
           MemoryCacheImageOutputStream(this).use { os ->
             gifSequenceWriter(os, delay = 200, loop = true, images = sequence {
