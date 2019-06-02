@@ -12,7 +12,7 @@ fun Maze3.toImage(width: Int, height: Int): BufferedImage {
   ctx.color = Color.white
   ctx.fillRect(0, 0, width, height)
 
-  renderToImage(img, Color.BLACK)
+  renderToImage(img)
   return img
 }
 
@@ -23,7 +23,7 @@ fun Maze3.renderToImage(image: BufferedImage, color: Color = Color.BLACK): Buffe
   val ctx = image.graphics
   ctx.color = color
   forEachAlive { x, y ->
-    ctx.fillRect(x * stepX, y * stepY, stepX, stepY)
+    ctx.fillRoundRect(x * stepX, y * stepY, stepX - 1, stepY - 1, stepX, stepY)
   }
   return image
 }
