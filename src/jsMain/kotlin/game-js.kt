@@ -26,17 +26,7 @@ var world by Delegates.observable(glider.toSize(40, 40)) { _, _, new ->
   }
 
   MainScope.launch {
-    val ctx = leftImage.getContext("2d") as CanvasRenderingContext2D
-    val stepX = leftImage.width.toDouble() / new.width
-    val stepY = leftImage.height.toDouble() / new.height
-
-    ctx.clearRect(0.0, 0.0, leftImage.width.toDouble(), leftImage.height.toDouble())
-    ctx.beginPath()
-    new.forEachAlive { x, y ->
-      ctx.rect(x * stepX, y * stepY, stepX, stepY)
-    }
-    ctx.fill()
-    ctx.closePath()
+    new.render(leftImage.getContext("2d") as CanvasRenderingContext2D)
   }
 }
 
