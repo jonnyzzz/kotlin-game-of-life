@@ -21,12 +21,12 @@ private fun getNode(rootNode: IIOMetadataNode, nodeName: String): IIOMetadataNod
 }
 
 //inspired by https://memorynotfound.com/generate-gif-image-java-delay-infinite-loop-example/
-fun gifSequenceWriter(
+fun createGIF(
   out: ImageOutputStream,
+  images: Sequence<RenderedImage>,
   imageType: Int = BufferedImage.TYPE_INT_ARGB,
-  delay: Int = 250,
-  loop: Boolean = false,
-  images: Sequence<RenderedImage>
+  delay: Int = 200,
+  loop: Boolean = false
 ) {
   val writer = ImageIO.getImageWritersBySuffix("gif").next()
   val params = writer.defaultWriteParam

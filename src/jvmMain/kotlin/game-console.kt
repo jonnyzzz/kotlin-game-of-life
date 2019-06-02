@@ -24,7 +24,7 @@ fun main() {
 
   FileOutputStream(file).use {
     MemoryCacheImageOutputStream(it).use { os ->
-      gifSequenceWriter(os, delay = 200, loop = false, images = images)
+      createGIF(os, images)
     }
   }
 

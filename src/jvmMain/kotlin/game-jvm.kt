@@ -78,7 +78,7 @@ fun main() {
           val steps = call.request.queryParameters["steps"]?.toInt() ?: 3
 
           MemoryCacheImageOutputStream(this).use { os ->
-            gifSequenceWriter(os, delay = 200, loop = false, images = sequence {
+            createGIF(os, delay = 200, loop = false, images = sequence {
               var world = buildWorld(call)
               var prevImage = world.toImage(800, 800)
 
