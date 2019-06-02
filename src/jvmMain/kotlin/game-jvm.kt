@@ -82,11 +82,12 @@ fun main() {
           MemoryCacheImageOutputStream(this).use { os ->
             gifSequenceWriter(os, delay = 200, loop = false, images = sequence {
               var world = buildWorld(call)
+              var prevImage = world.toImage(800, 800)
 
               repeat(steps) {
                 world = world.nextGeneration(EvolutionCell::conwayLaws)
-
-                yield(world.toImage(800, 800))
+                prevImage = world.renderToImage(prevImage.addAging())
+                yield(prevImage)
               }
             })
           }
