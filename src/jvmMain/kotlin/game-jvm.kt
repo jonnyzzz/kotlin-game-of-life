@@ -1,16 +1,26 @@
 package org.jonnyzzz.lifegame
 
+import io.ktor.application.ApplicationCall
 import io.ktor.application.call
 import io.ktor.application.install
 import io.ktor.features.CallLogging
+import io.ktor.http.ContentType
 import io.ktor.http.content.files
 import io.ktor.http.content.static
+import io.ktor.response.respondBytes
 import io.ktor.response.respondFile
+import io.ktor.response.respondOutputStream
+import io.ktor.response.respondText
 import io.ktor.routing.get
 import io.ktor.routing.routing
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
+import java.io.ByteArrayOutputStream
 import java.io.File
+import javax.imageio.ImageIO
+import javax.imageio.stream.ImageOutputStream
+import javax.imageio.stream.MemoryCacheImageInputStream
+import javax.imageio.stream.MemoryCacheImageOutputStream
 
 fun main() {
   embeddedServer(Netty, port = 8080, host = "127.0.0.1") {
@@ -35,44 +45,53 @@ fun main() {
         files(webDir)
       }
 
-/*            get("/ascii/{simStep}") {
-                val simStep = call.parameters["simStep"]?.toInt() ?: return@get
-                var world = populatedWorld
-                repeat(simStep) {
-                    world = world.conway()
-                }
-                call.respondText {
-                    world.toAscii()
-                }
-            }
+      fun buildWorld(call: ApplicationCall): Maze3 {
+        val simStep = call.parameters["simStep"]?.toInt() ?: 0
+        val width = call.parameters["width"]?.toInt() ?: 40
+        val height = call.parameters["height"]?.toInt() ?: 40
+        var world = randomMaze(width, height)
+        repeat(simStep) {
+          world = world.nextGeneration(EvolutionCell::conwayLaws)
+        }
+        return world
+      }
 
-            get("/postcard/{simStep}") {
-                val simStep = call.parameters["simStep"]?.toInt() ?: return@get
-                var world = populatedWorld
-                repeat(simStep) {
-                    world = world.conway()
-                }
-                val b = BufferedImage(100, 100, TYPE_INT_RGB)
-                val graphics = b.createGraphics()
-                graphics.color = Color.RED
+      get("/ascii") {
+        call.respondText {
+          buildWorld(call).renderToString()
+        }
+      }
 
-                world.forEachAlive { x, y ->
-                    graphics.fill3DRect(x * 10, y * 10, 10, 10, true)
-                }
+      get("/img") {
+        val world = buildWorld(call)
 
-                val imageBytes = ByteArrayOutputStream().use {
-                    ImageIO.write(b, "png", it)
-                    it.toByteArray()
-                }
+        val image = world.toImage(800, 800)
 
-                delay(Duration.ofMillis(200))
-                call.respondBytes(contentType = ContentType.Image.PNG, bytes = imageBytes)
-            }*/
+        val imageBytes = ByteArrayOutputStream().use {
+          ImageIO.write(image, "png", it)
+          it.toByteArray()
+        }
 
+        call.respondBytes(contentType = ContentType.Image.PNG, bytes = imageBytes)
+      }
 
+      get("/gif") {
+        call.respondOutputStream(contentType = ContentType.Image.GIF) {
+          val steps = call.parameters["steps"]?.toInt() ?: 3
+
+          MemoryCacheImageOutputStream(this).use { os ->
+            gifSequenceWriter(os, delay = 200, loop = true, images = sequence {
+              var world = buildWorld(call)
+
+              repeat(steps) {
+                world = world.nextGeneration(EvolutionCell::conwayLaws)
+
+                yield(world.toImage(800, 800))
+              }
+            })
+          }
+        }
+      }
     }
   }.start(wait = true)
 }
-
-
-// https://memorynotfound.com/generate-gif-image-java-delay-infinite-loop-example/
