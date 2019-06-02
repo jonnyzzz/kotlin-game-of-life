@@ -2,7 +2,7 @@ package org.jonnyzzz.lifegame
 
 import kotlin.properties.Delegates
 
-private fun initIOS() = randomMaze(18, 40)
+private fun initIOS() = randomMaze(40, 40)
 
 class WorldWrapper(
   val onWorldChange: (String) -> Unit

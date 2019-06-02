@@ -22,49 +22,59 @@
                                 <rect key="frame" x="20" y="51" width="374" height="126"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                 <accessibility key="accessibilityConfiguration">
-                                    <accessibilityTraits key="traits" staticText="YES" header="YES"/>
+                                    <accessibilityTraits key="traits" button="YES" staticText="YES" allowsDirectInteraction="YES" header="YES"/>
                                 </accessibility>
+                                <gestureRecognizers/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="icI-ft-tee" appends="YES" id="L0S-vW-4Kk"/>
+                                </connections>
                             </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="Loading..." textAlignment="natural" adjustsFontForContentSizeCategory="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tyl-Wi-Wye">
-                                <rect key="frame" x="20" y="172" width="374" height="690"/>
+                            <label opaque="NO" clipsSubviews="YES" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="clip" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lN6-eB-IVw">
+                                <rect key="frame" x="20" y="154" width="374" height="708"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <accessibility key="accessibilityConfiguration">
-                                    <accessibilityTraits key="traits" button="YES" image="YES"/>
+                                    <accessibilityTraits key="traits" button="YES" staticText="YES" updatesFrequently="YES"/>
                                 </accessibility>
                                 <gestureRecognizers/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="Loading...">
+                                        <attributes>
+                                            <font key="NSFont" size="24" name=".AppleSystemUIFont"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <nil key="highlightedColor"/>
                                 <connections>
-                                    <outletCollection property="gestureRecognizers" destination="4F0-t1-rTF" appends="YES" id="oLo-2W-dHj"/>
-                                    <outletCollection property="gestureRecognizers" destination="BD4-me-Q3p" appends="YES" id="W0J-gh-HAm"/>
+                                    <outletCollection property="gestureRecognizers" destination="8xX-mI-8dw" appends="YES" id="JDF-Qz-j2Q"/>
+                                    <outletCollection property="gestureRecognizers" destination="FZ7-BE-k7V" appends="YES" id="hNY-kf-vKg"/>
                                 </connections>
-                            </textView>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
-                        <outlet property="text" destination="Tyl-Wi-Wye" id="uCS-AP-2Wc"/>
+                        <outlet property="text" destination="lN6-eB-IVw" id="1Xz-Jc-TSo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="4F0-t1-rTF">
+                <tapGestureRecognizer id="8xX-mI-8dw">
                     <connections>
-                        <action selector="onClick:" destination="BYZ-38-t0r" id="jxy-Ut-GfW"/>
+                        <action selector="onClick:" destination="BYZ-38-t0r" id="ZdI-sz-J8X"/>
                     </connections>
                 </tapGestureRecognizer>
-                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="g9D-jZ-Qva">
+                <tapGestureRecognizer id="icI-ft-tee">
                     <connections>
-                        <action selector="onLongClick:" destination="BYZ-38-t0r" id="kpx-40-4o6"/>
+                        <action selector="onLongClick:" destination="BYZ-38-t0r" id="Mio-XO-Ngc"/>
                     </connections>
-                </pongPressGestureRecognizer>
-                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="BD4-me-Q3p">
+                </tapGestureRecognizer>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="FZ7-BE-k7V">
                     <connections>
-                        <action selector="onLongClick:" destination="BYZ-38-t0r" id="XeV-SS-NMx"/>
+                        <action selector="onLongClick:" destination="BYZ-38-t0r" id="eqM-Zs-Nko"/>
                     </connections>
                 </pongPressGestureRecognizer>
             </objects>
