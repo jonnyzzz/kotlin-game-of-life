@@ -24,6 +24,11 @@ kotlin {
         metaInfo = true
       }
     }
+
+    compilations["main"].kotlinOptions {
+      this.outputFile = "conway.js"
+
+    }
   }
 
   macosX64("console") {
