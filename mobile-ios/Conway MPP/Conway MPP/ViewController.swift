@@ -17,6 +17,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        GameKt.main()
+        
         world = WorldWrapper { [text] render -> KotlinUnit in
             //TODO: how many chars fits into a line?
             var lineCount = 0
