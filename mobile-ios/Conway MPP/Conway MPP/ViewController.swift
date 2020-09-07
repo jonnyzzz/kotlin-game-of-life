@@ -19,7 +19,7 @@ class ViewController: UIViewController {
         
         GameKt.main()
         
-        world = WorldWrapper { [text] render -> KotlinUnit in
+        world = WorldWrapper { [text] render in
             //TODO: how many chars fits into a line?
             var lineCount = 0
             var newText = ""
@@ -31,8 +31,6 @@ class ViewController: UIViewController {
             
             text!.numberOfLines = lineCount
             text!.text = newText
-            
-            return KotlinUnit()
         }
         world?.doInitWorld()
     }

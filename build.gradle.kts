@@ -1,8 +1,8 @@
 import org.jetbrains.kotlin.gradle.plugin.mpp.Framework
 
 plugins {
-  kotlin("multiplatform") version "1.3.31"
-  kotlin("xcode-compat") version "0.1"
+  kotlin("multiplatform") version "1.4.0"
+  kotlin("xcode-compat") version "0.2.5"
 }
 
 repositories {
@@ -11,12 +11,13 @@ repositories {
   mavenCentral()
 }
 
-val ktorVersion = "1.1.3"
+val ktorVersion = "1.4.0"
 val logbackVersion = "1.2.3"
 
 kotlin {
   jvm()
   js {
+    browser()
     compilations.all {
       kotlinOptions {
         moduleKind = "umd"
@@ -117,7 +118,7 @@ kotlin {
   }
 
   val run by tasks.creating(JavaExec::class) {
-    group = "build"
+    group = "run-me"
     dependsOn(targets["jvm"].compilations["main"].compileAllTaskName, jsJar)
     main = "org.jonnyzzz.lifegame.Game_jvmKt"
     doFirst {

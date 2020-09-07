@@ -1,6 +1,10 @@
 package org.jonnyzzz.lifegame
 
+import kotlinx.browser.document
 import kotlinx.coroutines.*
+import kotlinx.dom.addClass
+import kotlinx.dom.hasClass
+import kotlinx.dom.removeClass
 import kotlinx.html.*
 import kotlinx.html.dom.append
 import kotlinx.html.js.onClickFunction
@@ -8,10 +12,6 @@ import org.w3c.dom.Document
 import org.w3c.dom.Element
 import org.w3c.dom.HTMLCanvasElement
 import org.w3c.dom.HTMLPreElement
-import kotlin.browser.document
-import kotlin.dom.addClass
-import kotlin.dom.hasClass
-import kotlin.dom.removeClass
 import kotlin.properties.Delegates
 import kotlin.reflect.KProperty
 
@@ -42,11 +42,11 @@ fun nextStep() = MainScope.launch {
 var autoPlay: Job? = null
 
 fun toggleAutoplay() = MainScope.launch {
-  if (autoPlay != null) {
+  autoPlay = if (autoPlay != null) {
     autoPlay?.cancel()
-    autoPlay = null
+    null
   } else {
-    autoPlay = launch {
+    launch {
       while (true) {
         nextStep().join()
         delay(222)
